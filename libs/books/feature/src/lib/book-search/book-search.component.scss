@@ -58,6 +58,9 @@ form {
       bottom: 0;
       right: 0;
     }
+    button[disabled] {
+      color: $gray85;
+    }
   }
 }
 
@@ -68,5 +71,5 @@ form {
   justify-content: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: $gray40;
+  color: $gray60;
 }
