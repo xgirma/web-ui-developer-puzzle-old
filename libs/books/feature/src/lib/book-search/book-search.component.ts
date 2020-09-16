@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { startWith, debounceTime, distinctUntilChanged, tap, takeUntil } from 'rxjs/operators';
+import { FormBuilder } from '@angular/forms';
 import {
   addToReadingList,
   clearSearch,
-  getAllBooks,
+  getAllBooks, getSearchTerm,
   ReadingListBook,
   searchBooks
 } from '@tmo/books/data-access';
-import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
 
 @Component({
@@ -15,8 +17,10 @@ import { Book } from '@tmo/shared/models';
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit {
+export class BookSearchComponent implements OnInit, OnDestroy {
   books: ReadingListBook[];
+  searchTerm$: Observable<string> = this.store.select(getSearchTerm)
+  private unsubscribe$ = new Subject<void>();
 
   searchForm = this.fb.group({
     term: ''
@@ -27,11 +31,16 @@ export class BookSearchComponent implements OnInit {
     private readonly fb: FormBuilder
   ) {}
 
-  get searchTerm(): string {
-    return this.searchForm.value.term;
-  }
-
   ngOnInit(): void {
+    this.searchForm
+      .get('term')
+      .valueChanges.pipe(
+      startWith(''),
+      debounceTime(500),
+      distinctUntilChanged(),
+      tap(term => this.searchBooks(term)),
+      takeUntil(this.unsubscribe$)
+    ).subscribe();
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
     });
@@ -47,16 +56,20 @@ export class BookSearchComponent implements OnInit {
     this.store.dispatch(addToReadingList({ book }));
   }
 
-  searchExample() {
-    this.searchForm.controls.term.setValue('javascript');
-    this.searchBooks();
+  searchExample(searchTerm: string) {
+    this.searchBooks(searchTerm);
   }
 
-  searchBooks() {
-    if (this.searchForm.value.term) {
-      this.store.dispatch(searchBooks({ term: this.searchTerm }));
+  searchBooks(searchTerm: string) {
+    if (searchTerm) {
+      this.store.dispatch(searchBooks({ term: searchTerm }));
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

@@ -1,12 +1,14 @@
 import { $, $$, browser, ExpectedConditions } from 'protractor';
 
 describe('When: Use the search feature', () => {
-  it('Then: I should be able to search books by title', async () => {
+  beforeEach(async () => {
     await browser.get('/');
     await browser.wait(
       ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
     );
+  });
 
+  it('Then: I should be able to search books by title', async () => {
     const form = await $('form');
     const input = await $('input[type="search"]');
     await input.sendKeys('javascript');
@@ -16,12 +18,19 @@ describe('When: Use the search feature', () => {
     expect(items.length).toBeGreaterThan(1);
   });
 
-  xit('Then: I should see search results as I am typing', async () => {
-    await browser.get('/');
-    await browser.wait(
-      ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
-    );
+  it('Then: I should see search results as I am typing', async () => {
+    const form = await $('form');
+    const input = await $('input[type="search"]');
 
-    // TODO: Implement this test!
+    const parts = ['Java', 'Script'];
+
+    for (const [index, part] of parts.entries()) {
+      await input.sendKeys(part);
+      await form.submit();
+      await browser.sleep(500);
+
+      const titles = await $$('.book--title');
+      expect(titles[index].getText()).toContain(parts.slice(0, (index + 1)).join(''));
+    }
   });
 });
