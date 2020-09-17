@@ -105,8 +105,8 @@ export class ReadingListEffects implements OnInitEffects {
     this.actions$.pipe(
       ofType(ReadingListActions.markAsFinished),
       concatMap(({ item }) => {
-        item.finished = !item.finished;
-        item.finishedDate = item.finished ? new Date().toISOString() : '';
+        item.isFinished = true;
+        item.finishedDate = item.isFinished ? new Date().toISOString() : '';
 
         return this.http.put(`/api/reading-list/${item.bookId}/finished`, item).pipe(
           map(() => ReadingListActions.confirmedMarkAsFinished({ item })),

@@ -12,8 +12,10 @@
       <div class="reading-list-item--details--author">
         {{ b.authors.join(',') }}
       </div>
-      <div>
-        <mat-checkbox class="example-margin">Finished</mat-checkbox>
+      <div class="reading-list-item-detail--finished">
+        <mat-icon *ngIf="b.isFinished" color="accent">check_box</mat-icon>
+        <mat-icon *ngIf="!b.isFinished" (click)="markAsRead(b)">check_box_outline_blank</mat-icon>
+        <span> Finished {{ b.isFinished? (b.finishedDate | date:'mediumDate') : '' }}</span>
       </div>
     </div>
     <div>

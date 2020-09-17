@@ -4,9 +4,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs/operators';
 import {
   getReadingList,
+  markAsFinished,
   removeFromReadingList,
-  undoRemoveFromReadingList,
+  undoRemoveFromReadingList
 } from '@tmo/books/data-access';
+import { ReadingListItem } from '@tmo/shared/models';
 
 @Component({
   selector: 'tmo-reading-list',
@@ -28,5 +30,9 @@ export class ReadingListComponent {
       .subscribe(() =>
         this.store.dispatch(undoRemoveFromReadingList({ item }))
       );
+  }
+
+  markAsRead(item: ReadingListItem) {
+    this.store.dispatch(markAsFinished({item}))
   }
 }
