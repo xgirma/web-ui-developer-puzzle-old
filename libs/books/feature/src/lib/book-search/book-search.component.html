@@ -21,7 +21,10 @@
       </div>
       <div class="book--content">
         <div class="book--content--cover">
-          <img src="{{ b.coverUrl }}" [attr.aria-label]="b.title + ' by: ' + b.authors.join(',') "/>
+          <img
+            src="{{ b.coverUrl }}"
+            [attr.aria-label]="b.title + ' by: ' + b.authors.join(',')"
+          />
         </div>
         <div class="book--content--info">
           <div><strong>Author:</strong> {{ b.authors.join(',') }}</div>
@@ -48,7 +51,10 @@
 <ng-template #empty>
   <div class="empty">
     <p>
-      Try searching for a topic, for example "<a (click)="searchExample()" role="button" tabindex="0"
+      Try searching for a topic, for example "<a
+        (click)="searchExample()"
+        role="button"
+        tabindex="0"
         >JavaScript</a
       >".
     </p>

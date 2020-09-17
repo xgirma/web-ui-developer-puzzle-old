@@ -48,7 +48,7 @@ describe('BooksEffects', () => {
 
       effects.searchBooks$.subscribe((action) => {
         expect(action.type).toContain('[Book Search API] Search failure');
-        expect(BooksActions.searchBooksFailure({ error: ''})).not.toBeNull();
+        expect(BooksActions.searchBooksFailure({ error: '' })).not.toBeNull();
         done();
       });
 

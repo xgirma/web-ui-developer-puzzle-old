@@ -7,7 +7,7 @@ describe('Books Reducer', () => {
     const books = [createBook('A'), createBook('B'), createBook('C')];
 
     it('searchBooks should pass search-term, reset loaded to false and error to null', () => {
-      const term = "JavaScript";
+      const term = 'JavaScript';
       const action = BooksActions.searchBooks({ term });
 
       const result: State = reducer(initialState, action);
@@ -18,7 +18,6 @@ describe('Books Reducer', () => {
     });
 
     it('loadBooksSuccess should return set the list of known Books', () => {
-
       const action = BooksActions.searchBooksSuccess({ books });
 
       const result: State = reducer(initialState, action);
@@ -42,7 +41,7 @@ describe('Books Reducer', () => {
     });
 
     it('searchBooksFailure should clear ids and search term', () => {
-      const error = "Unknown error";
+      const error = 'Unknown error';
       const action = BooksActions.searchBooksFailure({ error });
 
       const result: State = reducer(initialState, action);
