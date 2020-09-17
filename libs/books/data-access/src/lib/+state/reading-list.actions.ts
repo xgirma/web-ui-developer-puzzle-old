@@ -52,17 +52,17 @@ export const confirmedRemoveFromReadingList = createAction(
   props<{ item: ReadingListItem }>()
 );
 
-// export const markAsFinished = createAction(
-//   '[Books Search Results] Mark book as read',
-//   props<{ item: ReadingListItem }>()
-// );
-//
-// export const failedMarkAsFinished = createAction(
-//   '[Reading List API] Failed to mark book as read',
-//   props<{ item: ReadingListItem }>()
-// );
-//
-// export const confirmedMarkAsFinished = createAction(
-//   '[Reading List API] Confirmed marked as read',
-//   props<{ item: ReadingListItem }>()
-// );
+export const markAsFinished = createAction(
+  '[Books Search Results] Mark book as read',
+  props<{ item: ReadingListItem }>()
+);
+
+export const failedMarkAsFinished = createAction(
+  '[Reading List API] Failed to mark book as read',
+  props<{ item: ReadingListItem }>()
+);
+
+export const confirmedMarkAsFinished = createAction(
+  '[Reading List API] Confirmed marked as read',
+  props<{ item: ReadingListItem }>()
+);

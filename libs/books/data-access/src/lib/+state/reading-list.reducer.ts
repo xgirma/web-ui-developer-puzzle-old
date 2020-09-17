@@ -64,15 +64,15 @@ const readingListReducer = createReducer(
     (state, action) => readingListAdapter.removeOne(action.book.id, state)
   ),
   on(ReadingListActions.markAsFinished, (state, {item}) => {
-    const update: Update<ReadingListItem> = {
-      id: item.bookId,
-      changes: {
-        finished: !item.finished,
-        finishedDate: item.finished ? '' : new Date().toISOString()
+      const update: Update<ReadingListItem> = {
+        id: item.bookId,
+        changes: {
+          finished: !item.finished,
+          finishedDate: item.finished ? '' : new Date().toISOString()
+        }
       }
-    }
-    return readingListAdapter.updateOne(update, state);
-  })
+      return readingListAdapter.updateOne(update, state);
+    })
 );
 
 export function reducer(state: State | undefined, action: Action) {
