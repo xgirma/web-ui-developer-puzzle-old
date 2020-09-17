@@ -3,7 +3,7 @@ import {
   BOOKS_FEATURE_KEY,
   booksAdapter,
   BooksPartialState,
-  State
+  State,
 } from './books.reducer';
 
 export const getBooksState = createFeatureSelector<BooksPartialState, State>(
@@ -24,4 +24,7 @@ export const getBooksError = createSelector(
 
 export const getBooks = createSelector(getBooksState, selectAll);
 
-export const getSearchTerm = createSelector(getBooksState, (state: State) => state.searchTerm)
+export const getSearchTerm = createSelector(
+  getBooksState,
+  (state: State) => state.searchTerm
+);

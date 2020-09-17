@@ -30,7 +30,9 @@ describe('When: Use the search feature', () => {
       await browser.sleep(500);
 
       const titles = await $$('.book--title');
-      expect(titles[index].getText()).toContain(parts.slice(0, (index + 1)).join(''));
+      expect(titles[index].getText()).toContain(
+        parts.slice(0, index + 1).join('')
+      );
     }
   });
 });

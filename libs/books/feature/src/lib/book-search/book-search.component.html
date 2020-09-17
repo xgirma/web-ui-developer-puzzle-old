@@ -1,4 +1,4 @@
-<form [formGroup]="searchForm" (submit)="searchBooks()">
+<form [formGroup]="searchForm">
   <mat-form-field floatLabel="never">
     <input
       autoFocus
@@ -51,7 +51,10 @@
 <ng-template #empty>
   <div class="empty">
     <p>
-      Try searching for a topic, for example "<a (click)="searchExample('JavaScript')" role="button" tabindex="0"
+      Try searching for a topic, for example "<a
+        (click)="searchExample('JavaScript')"
+        role="button"
+        tabindex="0"
         >JavaScript</a
       >".
     </p>
